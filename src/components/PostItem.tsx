@@ -6,6 +6,7 @@ interface Props {
 }
 
 const PostItem = ({ post }: Props) => {
+  console.log(post.avatar_url);
   return (
     <div className="relative group">
       <div className="absolute -inset-1 rounded-[20px] bg-gradient-to-r from-pink-600 to-purple-600 blur-sm opacity-0 group-hover:opacity-50 transition duration-300 pointer-events-none"></div>
@@ -37,6 +38,14 @@ const PostItem = ({ post }: Props) => {
               alt={post.title}
               className="w-full rounded-[20px] object-cover max-h-[150px] mx-auto"
             />
+          </div>
+          <div className="flex justify-around items-center">
+            <span className="cursor-pointer h-10 w-[50px] px-1 flex items-center justify-center font-extrabold rounded-lg">
+              ❤️<span className="ml-2"> {post.like_count ?? 0}</span>
+            </span>
+            <span className="cursor-pointer h-10 w-[50px] px-1 flex items-center justify-center font-extrabold rounded-lg">
+              💬<span className="ml-2"> {post.comment_count ?? 0}</span>
+            </span>
           </div>
         </div>
       </Link>

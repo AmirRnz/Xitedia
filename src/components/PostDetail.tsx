@@ -2,6 +2,7 @@ import { Post } from "./PostList";
 import { supabase } from "../supabase-client";
 import { useQuery } from "@tanstack/react-query";
 import LikeButton from "./LikeButton";
+import CommentSection from "./CommentSection";
 
 interface Props {
   postId: number;
@@ -12,8 +13,7 @@ const fetchPostById = async (id: number): Promise<Post> => {
     .select("*")
     .eq("id", id)
     .single();
-  console.log(data);
-
+  console.log(data, "here");
   if (error) throw new Error(error.message);
   return data as Post;
 };
@@ -29,11 +29,16 @@ const PostDetail = ({ postId }: Props) => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
   return (
     <div className="space-y-6">
-      <h2 className="text-6xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-        {data?.title}
-      </h2>
+      <div className="flex justify-center items-center gap-x-3">
+        <img src={data?.avatar_url} className="w-18 h-18 rounded-full" />
+        <h2 className="text-6xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          {data?.title}
+        </h2>
+      </div>
+
       {data?.image_url && (
         <img
           src={data.image_url}
@@ -46,6 +51,21 @@ const PostDetail = ({ postId }: Props) => {
         Posted on: {new Date(data!.created_at).toLocaleDateString()}
       </p>
       <LikeButton postId={postId} />
+      <CommentSection postId={postId} />
+      {postId === 18 ? (
+        <audio
+          autoPlay
+          loop
+          ref={(audio) => {
+            if (audio) {
+              audio.volume = 0.4; // Set volume to 50%
+            }
+          }}
+        >
+          <source src="/inmydreams1.mp3" type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      ) : null}
     </div>
   );
 };
