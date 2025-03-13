@@ -24,7 +24,7 @@ const PostDetail = ({ postId }: Props) => {
     queryFn: () => fetchPostById(postId),
   });
   if (isLoading) {
-    return <div> Loading posts...</div>;
+    return <div> Loading post...</div>;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
